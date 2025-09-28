@@ -6,7 +6,6 @@ import { RootState } from '../redux/store';
 
 export default function Index() {
   const payslips = useSelector((state: RootState) => state.payslips);
-  console.log('xxxx', payslips);
   return (
     <View style={styles.container}>
       <Text style={styles.header}>{payslips.length} records available</Text>
