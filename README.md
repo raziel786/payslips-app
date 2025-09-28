@@ -1,97 +1,71 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# Deel.com Payslips Tech Test
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+### Platform Scope
+- [ ] Use React Native CLI (or Expo if preferred)
+- [ ] TypeScript for type safety
+- [ ] Target platforms: iOS and Android
 
-## Step 1: Start Metro
+### Native File Handling (Download)
+- [ ] Implement download by copying bundled file to:
+  - iOS: app-specific directory (`DocumentDirectoryPath`) or share/save to Files
+  - Android: app-specific cache or `DownloadDirectoryPath` (handle permissions)
+- [ ] Inform user of saved file location (Toast, Alert, or similar)
+- [ ] Use a well-supported library for filesystem operations (e.g., `react-native-fs`)
+- [ ] Handle Android runtime permissions where required
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### Thought Process
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+I really enjoyed working on the Payslips task. Each payslip typically has an ID, a date range (from/to), and optionally a PDF file attached. We need to display this information clearly, allow users to download the PDF, and optionally preview it.
 
-```sh
-# Using npm
-npm start
+We’ll have buttons to perform actions for each payslip, e.g., Preview and Download. Since this will be a list of payslips, we’ll use a FlatList instead of .map(), as FlatList is optimised for mobile performance and only renders items currently on screen (plus a small buffer).
 
-# OR using Yarn
-yarn start
-```
+We’ll create some components in isolation:
 
-## Step 2: Build and run your app
+Header component – displays the title for the screen. I’m making a custom header so it can match the app’s theme and optionally show a back button.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+Payslip Card component – displays the payslip information, including:
 
-### Android
+- Payslip ID
 
-```sh
-# Using npm
-npm run android
+- Date range (from/to)
 
-# OR using Yarn
-yarn android
-```
+When the user taps on the card, it navigates to the Payslip Details screen, where the user can download the PDF. This keeps the main list clean and offloads all PDF-related actions to the details page. Each card is lightweight and only renders the necessary information for the list view. Navigation is handled via React Navigation (Stack.Navigator) so that each payslip has its own dedicated detail screen.
 
-### iOS
+Button component – enhanced to accept a loading state, so users get visual feedback while the PDF is being downloaded or previewed.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+We’ll also include:
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+State management – Redux to store the payslips list and allow easy access to individual payslip details.
 
-```sh
-bundle install
-```
+Utilities – date formatting helper to display human-readable dates for each payslip.
 
-Then, and every time you update your native dependencies, run:
+All components and utility functions will be unit tested to ensure they work correctly, handle errors gracefully, and provide a stable user experience.
 
-```sh
-bundle exec pod install
-```
+## Areas for Improvement / Points of Concern
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+- Implement a Preview/Open option so users can view the PDF after downloading it.
 
-```sh
-# Using npm
-npm run ios
+- Display more detailed information in the Payslip Details screen, such as the employee's name, address, and a full breakdown of figures, when the user selects a payslip.
 
-# OR using Yarn
-yarn ios
-```
+- Create unit tests for the Screens created.
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Preview
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+![Sep-28-2025 22-33-04](https://github.com/user-attachments/assets/172d4f8a-6785-4e8f-85d0-08bf2792ed0c)
 
-## Step 3: Modify your app
 
-Now that you have successfully run the app, let's make changes!
+## Installation
+run `yarn install` on the root of the directory.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## To Run
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+1. Start your iOS and/or Android simulator.
+2. Run `yarn run ios` or `yarn run android` in your terminal, depending on the device you are targetting
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### Run unit tests
 
-## Congratulations! :tada:
+In the terminal, run ```yarn run test```
 
-You've successfully run and modified your React Native App. :partying_face:
+<img width="391" height="114" alt="Screenshot 2025-09-28 at 22 52 15" src="https://github.com/user-attachments/assets/c7c2b077-183b-4431-bcd4-332b2ef91db8" />
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
