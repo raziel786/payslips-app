@@ -42,6 +42,8 @@ Utilities – date formatting helper to display human-readable dates for each pa
 
 All components and utility functions will be unit tested to ensure they work correctly, handle errors gracefully, and provide a stable user experience.
 
+When a user downloads a payslip, a timestamp is added along side the ID to ensure each PDF has a unique filename. The download button is disabled during the operation and re-enabled once the process completes, regardless of success or failure.
+
 ## Areas for Improvement / Points of Concern
 
 - Implement a Preview/Open option so users can view the PDF after downloading it.
