@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { formatPeriod } from '../utils/DateFormat';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { PayslipType } from '../types/PaySlipTypes';
+import Feather from 'react-native-vector-icons/Feather';
 
 type RootStackParamList = {
   PaySlipDetails: { payslipId: string };
@@ -34,7 +35,7 @@ export default function PaySlipCard({ id, fromDate, toDate }: PayslipType) {
             {formatPeriod(fromDate, toDate)}
           </Text>
         </View>
-        <Text>{'>'}</Text>
+        <Feather name="chevron-right" size={24} color="black" />
       </View>
     </TouchableOpacity>
   );
